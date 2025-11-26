@@ -16,15 +16,22 @@ app.add_middleware(
     allow_credentials=True,
 )
 
-app.include_router(users_router)
-
-@app.get("/health")
-async def health():
-    return {"status": "ok"}
-
 @app.get("/hello")
 async def health():
     return {
         "message": "Hello, Python FastAPI",
         "Python-Framework": "FastAPI "+__version__,
     }
+
+# app.include_router(users_router)
+
+# @app.get("/health")
+# async def health():
+#     return {"status": "ok"}
+
+# @app.get("/hello")
+# async def health():
+#     return {
+#         "message": "Hello, Python FastAPI",
+#         "Python-Framework": "FastAPI "+__version__,
+#     }
