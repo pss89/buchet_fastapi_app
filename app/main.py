@@ -23,6 +23,10 @@ async def health():
         "Python-Framework": "FastAPI "+__version__,
     }
 
+@app.get("/items/{item_id}")
+async def read_item(item_id: int, q: str | None = None):
+    return {"item_id": item_id, "q": q}
+
 # app.include_router(users_router)
 
 # @app.get("/health")
