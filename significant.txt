@@ -1,0 +1,4 @@
+20251127
+- bcrypt 버전이슈로 다운그레이드 진행
+pip uninstall bcrypt
+pip install "bcrypt==4.0.1"

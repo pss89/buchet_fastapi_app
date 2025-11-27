@@ -2,6 +2,7 @@ import json
 from typing import List
 from pydantic_settings import BaseSettings
 from pydantic import field_validator
+from urllib.parse import quote_plus   # ★ 추가
 
 class Settings(BaseSettings):
     APP_NAME: str = "fastapi-mysql-app"
@@ -18,8 +19,9 @@ class Settings(BaseSettings):
 
     @property
     def SQLALCHEMY_DATABASE_URL(self) -> str:
+        password = quote_plus(self.DB_PASS)   # ★ 여기서 인코딩 (@ → %40)
         return (
-            f"mysql+asyncmy://{self.DB_USER}:{self.DB_PASS}"
+            f"mysql+asyncmy://{self.DB_USER}:{password}"
             f"@{self.DB_HOST}:{self.DB_PORT}/{self.DB_NAME}?charset=utf8mb4"
         )
 

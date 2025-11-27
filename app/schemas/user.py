@@ -11,3 +11,8 @@ class UserRead(UserBase):
     id: int
     class Config:
         from_attributes = True  # ORM 객체 -> Pydantic 변환 허용
+
+class UserPasswordChange(BaseModel):
+    email: EmailStr
+    current_password: str
+    new_password: str
