@@ -16,22 +16,22 @@ app.add_middleware(
     allow_credentials=True,
 )
 
-@app.get("/hello")
-async def health():
+@app.get("/")
+async def hello():
     return {
         "message": "Hello, Python FastAPI",
         "Python-Framework": "FastAPI "+__version__,
     }
+    
+@app.get("/health")
+async def health():
+    return {"status": "ok"}
 
-@app.get("/items/{item_id}")
-async def read_item(item_id: int, q: str | None = None):
-    return {"item_id": item_id, "q": q}
+app.include_router(users_router)
 
-# app.include_router(users_router)
-
-# @app.get("/health")
-# async def health():
-#     return {"status": "ok"}
+# @app.get("/items/{item_id}")
+# async def read_item(item_id: int, q: str | None = None):
+#     return {"item_id": item_id, "q": q}
 
 # @app.get("/hello")
 # async def health():
