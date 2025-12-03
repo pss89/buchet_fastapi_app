@@ -16,9 +16,8 @@ class UserService:
         return user
 
     @staticmethod
-    async def get_users(db: AsyncSession, *, limit: int = 50, offset: int = 0) -> list[User]:
-        return await UserRepository.list(db, limit=limit, offset=offset)
-
+    async def get_users(db: AsyncSession, *, email: str | None = None, limit: int = 50, offset: int = 0) -> list[User]:
+        return await UserRepository.list(db, email=email, limit=limit, offset=offset)
 
     @staticmethod
     async def change_password(

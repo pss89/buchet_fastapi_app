@@ -16,6 +16,11 @@ class UserRepository:
         return obj
 
     @staticmethod
-    async def list(db: AsyncSession, *, limit: int = 50, offset: int = 0) -> list[User]:
-        res = await db.execute(select(User).limit(limit).offset(offset))
+    async def list(db: AsyncSession, *, email: str | None = None, limit: int = 50, offset: int = 0) -> list[User]:
+        # res = await db.execute(select(User).limit(limit).offset(offset))
+        stmt = select(User)
+        if email:
+            stmt = stmt.where(User.email == email)
+        stmt = stmt.limit(limit).offset(offset)
+        res = await db.execute(stmt)
         return list(res.scalars())

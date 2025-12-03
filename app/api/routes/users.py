@@ -14,8 +14,8 @@ async def create_user(payload: UserCreate, db: AsyncSession = Depends(get_db_ses
         raise HTTPException(status_code=400, detail=str(e))
 
 @router.get("", response_model=list[UserRead])
-async def list_users(limit: int = 50, offset: int = 0, db: AsyncSession = Depends(get_db_session)):
-    return await UserService.get_users(db, limit=limit, offset=offset)
+async def get_users(email: str | None = None, limit: int = 50, offset: int = 0, db: AsyncSession = Depends(get_db_session)):
+    return await UserService.get_users(db, email=email, limit=limit, offset=offset)
 
 @router.post("/change-password", response_model=UserRead)
 async def change_password(
