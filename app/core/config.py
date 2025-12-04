@@ -13,13 +13,19 @@ class Settings(BaseSettings):
     DB_USER: str
     DB_PASS: str
     DB_NAME: str
+    
+    # JWT 설정
+    JWT_SECRET_KEY: str
+    JWT_ALGORITHM: str = "HS256"
+    # 60분
+    JWT_EXPIRATION_MINUTES: int = 60
 
     # 문자열/리스트 모두 허용 → 내부에선 list[str]로 통일
     CORS_ORIGINS: List[str] = []
 
     @property
     def SQLALCHEMY_DATABASE_URL(self) -> str:
-        password = quote_plus(self.DB_PASS)   # ★ 여기서 인코딩 (@ → %40)
+        password = quote_plus(self.DB_PASS)   # 여기서 인코딩 (@ → %40)
         return (
             f"mysql+asyncmy://{self.DB_USER}:{password}"
             f"@{self.DB_HOST}:{self.DB_PORT}/{self.DB_NAME}?charset=utf8mb4"
@@ -49,8 +55,9 @@ class Settings(BaseSettings):
             # 콤마 구분
             return [x.strip() for x in s.split(",") if x.strip()]
         return v
-
+    
     class Config:
         env_file = ".env"
+        env_file_encoding = "utf-8"
 
 settings = Settings()
